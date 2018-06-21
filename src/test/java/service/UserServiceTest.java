@@ -46,4 +46,13 @@ public class UserServiceTest {
         when(userDao.findUserByEmail("email")).thenReturn(user);
         assertThat(userService.logIn("email", "123456")).isFalse();
     }
+    @Test
+    public void shouldReturnTrueWhenCreateUser(){
+        User user = User.builder()
+                .email("email")
+                .password("678910")
+                .build();
+        when(userService.createUser(user)).thenReturn(true);
+        assertThat(userService.createUser(user)).isTrue();
+    }
 }
