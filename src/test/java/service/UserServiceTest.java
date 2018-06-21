@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
-
     @Mock
     UserDao userDao;
 
@@ -36,5 +35,15 @@ public class UserServiceTest {
     public void shouldReturnFalseIfNoUser() {
         when(userDao.findUserByEmail("email")).thenReturn(null);
         assertThat(userService.logIn("email", anyString())).isFalse();
+    }
+
+    @Test
+    public void shouldReturnFalseIfDifferentPassword(){
+        User user = User.builder()
+                .email("email")
+                .password("678910")
+                .build();
+        when(userDao.findUserByEmail("email")).thenReturn(user);
+        assertThat(userService.logIn("email", "123456")).isFalse();
     }
 }
